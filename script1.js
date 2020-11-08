@@ -7,6 +7,7 @@ inputField.addEventListener('keyup', function(e) {
    e.target.style.height = `${e.target.scrollHeight}px`;
 });
 
+let rows = ``;
 let barisJumlah = ``;
 tombolSubmit.addEventListener('click', () => {
    // ambil value, split, convert ke int, dan urutkan
@@ -33,29 +34,6 @@ tombolSubmit.addEventListener('click', () => {
       (table.getElementsByClassName('jumlah')[0]).remove();
    }
 
-   // fungsi untuk membuat element2 baris
-   function eachRow(nomor, value, f) {
-      const tr = document.createElement('tr');
-      const no = document.createElement('td');
-      const noText = document.createTextNode(`${nomor}.`);
-      const nilai = document.createElement('td');
-      const nilaiText = document.createTextNode(value)
-      const frekuensi = document.createElement('td');
-      const frekuensiText = document.createTextNode(f)
-
-      no.appendChild(noText);
-      nilai.appendChild(nilaiText);
-      frekuensi.appendChild(frekuensiText);
-      
-      tr.appendChild(no);
-      tr.classList.add('removeable');
-      tr.appendChild(nilai);
-      tr.appendChild(frekuensi);
-
-      const table = document.getElementsByTagName('table')[0];
-      table.appendChild(tr);
-   }
-
    // pengulangan untuk setiap row/baris
    let f = 0, jumlah_f = 0, noRow = 1;
    for( let i = 0; i < x.length; i++ ) {
@@ -64,7 +42,12 @@ tombolSubmit.addEventListener('click', () => {
          for( let j = i; j < x.length; j++ ) {
             if( x[j] == x[i] ) f++;
             if( j == x.length - 1 ) {
-               eachRow(noRow++, x[i], f);
+               rows = `<tr class="removeable">
+                           <td>${noRow++}.</td>
+                           <td>${x[i]}</td>
+                           <td>${f}</td>
+                        </tr>`;
+               table.innerHTML += rows;
                jumlah_f += f;
                f = 0;
             }
