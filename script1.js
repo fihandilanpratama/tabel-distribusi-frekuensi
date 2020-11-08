@@ -7,6 +7,7 @@ inputField.addEventListener('keyup', function(e) {
    e.target.style.height = `${e.target.scrollHeight}px`;
 });
 
+let barisJumlah = ``;
 tombolSubmit.addEventListener('click', () => {
    // ambil value, split, convert ke int, dan urutkan
    const inputValue = inputField.value; 
@@ -25,12 +26,14 @@ tombolSubmit.addEventListener('click', () => {
       return false;
    }
 
-   // hapus semua baris selain head table
+   // hapus semua baris table selain head table
    let rows = table.querySelectorAll('.removeable');
-   rows.forEach(x => {
-      x.remove();
-   });
+   rows.forEach(x => { x.remove(); });
+   if( barisJumlah.length > 10 ) {
+      (table.getElementsByClassName('jumlah')[0]).remove();
+   }
 
+   // fungsi untuk membuat element2 baris
    function eachRow(nomor, value, f) {
       const tr = document.createElement('tr');
       const no = document.createElement('td');
@@ -53,6 +56,7 @@ tombolSubmit.addEventListener('click', () => {
       table.appendChild(tr);
    }
 
+   // pengulangan untuk setiap row/baris
    let f = 0, jumlah_f = 0, noRow = 1;
    for( let i = 0; i < x.length; i++ ) {
       if( i > 0 && x[i] == x[i-1] ) {}
@@ -67,4 +71,9 @@ tombolSubmit.addEventListener('click', () => {
          }   
       }
    }
-})
+   barisJumlah = `<tr class="jumlah">
+                     <td colspan="2">jumlah</td>
+                     <td>${jumlah_f}</td>
+                  </tr>`;
+   table.innerHTML += barisJumlah;
+});
