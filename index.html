@@ -5,32 +5,92 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>TBF</title>
    <style>
+      h1 { text-align: center; }
+      .container {
+         width: 60%;
+         height: 100%;
+         margin: 20px auto;
+         background-color: rgb(146, 224, 198);
+         border-radius: 20px;
+         box-sizing: border-box;
+      }
+      .col-inputan {
+         margin: 20px;
+         margin-left: 30px;
+         float: left;
+      }
+      .col-info-data {
+         float: left;
+         margin-top: 15px;
+      }
       textarea {
          resize: none;
          overflow: hidden;
          min-height: 50px;
          /* max-height: 100px; */
       }
+      .table-container {
+         display: flex;
+         margin: 20px auto;
+         padding: 20px 0;
+         width: 90%;
+         justify-content: space-evenly;
+         visibility: hidden;
+      }
       table {
          display: none;
+         text-align: center;
+         border-width: 2px;
+         border-collapse: collapse;
       }
+      button { display: block; }
    </style>
 </head>
 <body>
    <h1>Tabel Distribusi Frekuensi</h1>
 
-   <label>Masukkan data :</label> <br>
-   <textarea id="input" cols="40" rows="1" style="font-size: 20px;"></textarea>
-   <br>
-   <button id="submit">submit</button>
+   <div class="container">
+      <div class="col-1 col-inputan">
+         <label>Masukkan data :</label> <br>
+         <textarea id="input" cols="40" rows="1" style="font-size: 20px;"></textarea>
+         <button id="submit">submit</button>
+      </div>
+      <div class="col-2 col-info-data">
+         <ul>
+            <li>Nilai Terkecil = </li>
+            <li>Nilai Terbesar = </li>
+            <li>Jumlah Data = </li>
+            <li>Range = </li>
+            <li>Banyak Kelas = </li>
+            <li>Panjang Kelas = </li>
+         </ul>
+      </div>
 
-   <table border="1" cellpadding="10" cellspacing="0">
-      <tr class="first-row">
-         <td>No.</td>
-         <td>Nilai</td>
-         <td>F</td>
-      </tr>
-   </table>
+      <div class="table-container">
+         <div class="col-1 col-data-tunggal">
+            <h4>Tabel Data Individu</h4>
+            <table border="1" cellpadding="10" cellspacing="0">
+               <tr class="first-row">
+                  <td>No.</td>
+                  <td>Nilai</td>
+                  <td>F</td>
+               </tr>
+            </table>
+         </div>
+
+         <div class="col-2 col-data-kelompok">
+            <h4>Tabel Data Berkelompok</h4>
+            <table border="1" cellpadding="10" cellspacing="0" id="data-kelompok">
+               <tr class="first-row">
+                  <td>kelas ke</td>
+                  <td>interval</td>
+                  <td>f</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </div>
+   
 
    <script src="script1.js"></script>
 </body>
