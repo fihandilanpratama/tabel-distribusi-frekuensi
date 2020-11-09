@@ -23,13 +23,17 @@ let rows = ``;
 let rowsDK = ``;
 let barisJumlah = ``;
 tombolSubmit.addEventListener('click', () => {
+   // jalankan animasi loader
+   const loader = document.getElementsByClassName('loader')[0];
+   loader.style.animation = 'spin .5s linear 2';
+   
    // ambil value, split, convert ke int, dan urutkan
    const inputValue = inputField.value; 
    const arrayValue = inputValue.split(" ");
    const x = arrayValue.map(x => parseInt(x));
    x.sort((a, b) => a - b);
-   console.log(x);
-   
+
+   setTimeout(function() {
    // tampilkan table
    const infoData = document.getElementsByClassName('col-info-data')[0];
    const tableContainer = document.getElementsByClassName('table-container')[0];
@@ -56,6 +60,7 @@ tombolSubmit.addEventListener('click', () => {
    }
 
    // hapus semua baris table selain head table
+   loader.style.animation = ''; // reset
    let rowsDelete = document.querySelectorAll('.removeable');
    rowsDelete.forEach(x => { x.remove(); });
    if( barisJumlah.length > 10 ) {
@@ -73,36 +78,40 @@ tombolSubmit.addEventListener('click', () => {
                            <li>Panjang Kelas = ${panjangKelas(x)}</li>
                         </ul>`;
 
-   // pengulangan untuk setiap row/baris
-   let f = 0, jumlah_f = 0, noRow = 1;
+   let Data = {
+      f: 0,
+      total_f: 0,
+      mean: 0
+   }
+   // pengulangan untuk setiap row/baris tabel data tunggal
+   let noRow = 1;
    for( let i = 0; i < x.length; i++ ) {
       if( i > 0 && x[i] == x[i-1] ) {}
       else {
          for( let j = i; j < x.length; j++ ) {
-            if( x[j] == x[i] ) f++;
+            if( x[j] == x[i] ) Data.f++;
             if( j == x.length - 1 ) {
                rows = `<tr class="removeable">
                            <td>${noRow++}.</td>
                            <td>${x[i]}</td>
-                           <td>${f}</td>
+                           <td>${Data.f}</td>
                         </tr>`;
                table.innerHTML += rows;
-               jumlah_f += f;
-               f = 0;
+               Data.total_f += Data.f;
+               Data.f = 0;
             }
          }   
       }
    }
    barisJumlah = `<tr class="jumlah">
                      <td colspan="2">jumlah</td>
-                     <td>${jumlah_f}</td>
+                     <td>${Data.total_f}</td>
                   </tr>`;
    table.innerHTML += barisJumlah;
 
 
-   let batasBawah, batasAtas;
    // tabel distribusi frekuensi
-   console.log(`|kelas ke |   nilai   |  f  |`);
+   let batasBawah, batasAtas;
    for( let i = 0; i < banyakKelas(x); i++ ) {
       if( i == 0 ) {
          // * batas bawah dan batas atas untuk kelas pertama
@@ -113,20 +122,21 @@ tombolSubmit.addEventListener('click', () => {
          batasBawah = batasAtas + 1;
          batasAtas = batasBawah + (panjangKelas(x) - 1);
       }
-      f = 0;
+      Data.f = 0;
       // * cari nilai frekuensi untuk setiap kelas interval
       for( let j = batasBawah; j <= batasAtas; j++ ) {
-         f += x.filter(x => x == j).length;
+         Data.f += x.filter(x => x == j).length;
       }
-      console.log(`    ${i+1}        ${batasBawah} - ${batasAtas}     ${f}`);
       rowsDK = `<tr class="removeable">
                   <td>${i+1}</td>
                   <td>${batasBawah} - ${batasAtas}</td>
-                  <td>${f}</td>
+                  <td>${Data.f}</td>
                </tr>`;
       tableDK.innerHTML += rowsDK;
    }
    tableDK.innerHTML += barisJumlah;
+
+   }, 1000);
 });
 
 
