@@ -1,5 +1,3 @@
-import { Data, checkDes } from './modules.js';
-
 function tableHead() {
    return `<thead>
             <tr>
@@ -60,5 +58,3 @@ function tampilkanTabelBaru(table, arrBatasAtas, arrBatasBawah, arrF, arrNilaiTe
    table.innerHTML += tableFooter('Varians', '', '', '', '', checkDes(Data.cari_varians()));
    table.innerHTML += tableFooter('Standar Deviasi', '', '', '', '', checkDes(Data.cari_standar_deviasi()));
 }
-
-export { tableHead, tableRow, tampilkanTabelBaru };

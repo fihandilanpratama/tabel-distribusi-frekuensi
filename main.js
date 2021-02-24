@@ -1,6 +1,3 @@
-import { Data } from './modules/modules.js';
-import { tableHead, tableRow, tampilkanTabelBaru } from './modules/table.js';
-
 let no = 1;
 
 const btnTambah = document.getElementById('btn-tambah');
@@ -41,9 +38,7 @@ btnProses.addEventListener('click', () => {
    // jika ada bagian yang tidak diisi
    if( Data.batas_bawah.includes(NaN) || Data.batas_atas.includes(NaN) || Data.f.includes(NaN) ) {
       alert('Ada bagian yang belum diisi !');
-      Data.batas_bawah = [];
-      Data.batas_atas = [];
-      Data.f = [];
+      Data.resetValues();
       return false;
    }
 

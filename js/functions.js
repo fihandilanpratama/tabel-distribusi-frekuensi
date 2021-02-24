@@ -104,5 +104,3 @@ function checkDes(x) {
       return a;
    }
 }
-
-export { Data, checkDes };
